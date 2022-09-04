@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+import "google/protobuf/any.proto";
+
+package keyvalpb;
+option go_package="proto/keyval";
+
+service KeyValue {
+    rpc Add(Request) returns (Response){};
+}
+
+message Expiration {
+    google.protobuf.Any key = 1;
+    google.protobuf.Any value = 2;
+    int32 exp_time = 3;
+    string deleted_time = 4;
+}
+
+message Request {
+    google.protobuf.Any key = 1;
+    google.protobuf.Any value = 2;
+    int32 expTime = 3;
+}
+
+message Response {
+    google.protobuf.Any key = 1;
+    google.protobuf.Any value = 2;
+    bool added = 3;
+    string added_time = 4;
+    string deleted_time = 5;
+    Expiration expiration = 6;
+}
